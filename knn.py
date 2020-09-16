@@ -51,13 +51,13 @@ from absl import app, flags
 # Define flags.
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string('encoder_fn_name', 'cnn_one_hot',
+flags.DEFINE_string('encoder_fn_name', 'transformer',
                     'Name of encoder_fn to use. None if using Transformer.')
-flags.DEFINE_string('encoder_fn_kwargs_path', 'cnn_kwargs',
+flags.DEFINE_string('encoder_fn_kwargs_path', 'medium_transformer_kwargs',
                     'Path to encoder_fn_kwargs.')
-flags.DEFINE_string('reduce_fn_name', 'linear_max_pool',
+flags.DEFINE_string('reduce_fn_name', 'max_pool',
                     'Name of reduce_fn to use.')
-flags.DEFINE_string('reduce_fn_kwargs_path', 'linear_pool_1024',
+flags.DEFINE_string('reduce_fn_kwargs_path', 'pool',
                     'Path to reduce_fn_kwargs.')
 
 flags.DEFINE_integer('knn_batch_size', 64,
@@ -77,9 +77,9 @@ flags.DEFINE_integer('knn_sample_random_state', 1,
 flags.DEFINE_integer('model_random_key', 0,
                      'Random key used for model instantiation.')
 
-flags.DEFINE_boolean('use_transformer', False,
+flags.DEFINE_boolean('use_transformer', True,
                      'Whether or not to use transformer encoder')
-flags.DEFINE_boolean('use_bert', False,
+flags.DEFINE_boolean('use_bert', True,
                      'Whether or not to use bidirectional transformer.')
 flags.DEFINE_string('restore_transformer_dir', None,
                     'Directory to load pretrained transformer from.')
@@ -273,6 +273,6 @@ def main(_):
 
     print(knn_results)
 
-    
+
 if __name__ == '__main__':
     app.run(main)

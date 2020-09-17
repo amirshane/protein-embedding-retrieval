@@ -84,11 +84,12 @@ flags.DEFINE_boolean('use_bert', True,
 flags.DEFINE_string('restore_transformer_dir', None,
                     'Directory to load pretrained transformer from.')
 
-flags.DEFINE_string('gcs_bucket', 'neuralblast',
+flags.DEFINE_string('gcs_bucket', 'sequin-public',
                     'GCS bucket to save to and load from.')
 flags.DEFINE_string('data_partitions_dirpath', 'random_split/',
                     'Location of Pfam data in GCS bucket.')
 
+flags.DEFINE_string('label', 'medium', 'Label for .txt file for saving.')
 
 def get_model_kwargs(encoder_fn_name, encoder_fn_kwargs_path, reduce_fn_name,
                      reduce_fn_kwargs_path):
@@ -272,6 +273,9 @@ def main(_):
                 sample_random_state=FLAGS.knn_sample_random_state))
 
     print(knn_results)
+
+    with gcsfs.open('pool_results/' + FLAGS.label + '.txt', 'w') as f:
+        f.write(str(knn_results))
 
 
 if __name__ == '__main__':
